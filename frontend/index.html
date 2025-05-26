@@ -57,13 +57,15 @@
 
     .input-row {
       display: flex;
+      margin-top: 0.5rem;
     }
 
-    input[type="text"] {
-      flex: 1;
+    input[type="text"], input[type="password"], select {
       padding: 0.6rem;
       border: 1px solid #ccc;
       border-radius: 4px;
+      margin-right: 0.5rem;
+      flex: 1;
     }
 
     button {
@@ -72,7 +74,6 @@
       color: white;
       border: none;
       border-radius: 4px;
-      margin-left: 0.5rem;
       cursor: pointer;
     }
 
@@ -85,6 +86,19 @@
   <h1>Chatbot RAGaRenn</h1>
   <div class="chat-container">
     <div class="messages" id="messages"></div>
+
+    <div class="input-row">
+      <input type="password" id="code" placeholder="Code d’accès" />
+    </div>
+
+    <div class="input-row">
+      <select id="model">
+        <option value="deepseek-coder:33b">Deepseek Coder 33B</option>
+        <option value="mistral-7b-instruct">Mistral 7B Instruct</option>
+        <option value="mixtral-8x7b">Mixtral 8x7B</option>
+      </select>
+    </div>
+
     <div class="input-row">
       <input type="text" id="message" placeholder="Pose ta question ici" onkeydown="handleKey(event)" />
       <button onclick="sendMessage()">Envoyer</button>
@@ -108,8 +122,16 @@
     }
 
     async function sendMessage() {
+      const code = document.getElementById('code').value;
+      const model = document.getElementById('model').value;
       const input = document.getElementById('message');
       const text = input.value.trim();
+
+      if (code !== "bretagne2025") {
+        alert("Code d’accès incorrect.");
+        return;
+      }
+
       if (!text) return;
 
       appendBubble(text, 'user');
@@ -120,7 +142,7 @@
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, model })
       });
 
       const data = await response.json();
