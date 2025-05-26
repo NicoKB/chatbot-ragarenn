@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   const { message } = req.body;
 
   try {
-    const response = await fetch("https://ragarenn.eskemm-numerique.fr/equipe2/api/chat/completions", {
+    const response = await fetch("https://ragarenn.eskemm-numerique.fr/demo@bretagne.bzh/api/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
