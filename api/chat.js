@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.RAGARENN_API_KEY}`
       },
       body: JSON.stringify({
-        model: "deepseek-coder:33b",
+        model: "mistralai/Mistral-Small-3.1-24B-Instruct-2503",
         messages: [{ role: "user", content: message }]
       })
     });
