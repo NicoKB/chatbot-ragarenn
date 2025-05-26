@@ -10,8 +10,10 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "mistralai/Mistral-Small-3.1-24B-Instruct-2503",
-        messages: [{ role: "user", content: message }]
-      })
+messages: [
+  { role: "system", content: "Tu es un assistant public qui aide les usagers à comprendre les services proposés par la Région Bretagne. Réponds de manière claire, concise, et polie." },
+  { role: "user", content: message }
+]      })
     });
 
     const data = await response.json();
