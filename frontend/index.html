@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot RAGaRenn</title>
+</head>
+<body>
+  <h1>Chatbot RAGaRenn</h1>
+  <input type="text" id="message" placeholder="Votre message" />
+  <button onclick="sendMessage()">Envoyer</button>
+  <div id="response"></div>
+
+  <script>
+    async function sendMessage() {
+      const message = document.getElementById('message').value;
+      const responseDiv = document.getElementById('response');
+      responseDiv.innerText = 'Chargement...';
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+      responseDiv.innerText = data.reply || 'Erreur';
+    }
+  </script>
+</body>
+</html>
